@@ -52,6 +52,15 @@ fun main() {
     // Polymorphism
 //    audiA3.drive(200.0)
 //    teslaS.drive(200.0)
+
+    val human = Human("James", "USA", 260.0, 28.0)
+    val elephant = Elephant("Bootsy", "Africa", 5400.0, 34.0)
+
+    human.run()
+    elephant.run()
+
+    human.breath()
+    elephant.breath()
 }
 
 class Person(firstName: String = "John", lastName: String = "Doe") {
@@ -163,5 +172,50 @@ class ElectricCar(maxSpeed: Double, name: String, brand: String, batteryLife: Do
     override fun brake() {
         super.brake()
         println("Brake inside of the electric car.")
+    }
+}
+
+abstract class Mammal(private val name: String, private val origin: String,
+    private val weight: Double) { // Concrete (Non-Abstract) Properties
+
+    // Abstract Property (Must be overridden by Subclasses)
+    abstract var maxSpeed: Double
+
+    // Abstract Methods (Must be overridden by subclasses)
+    abstract fun run()
+    abstract fun breath()
+
+    // Concrete (Non-Abstract) Method
+    fun displayDetails() {
+        println("Name: $name, Origin: $origin, Weight: $weight, " +
+                "Max Speed: $maxSpeed.")
+    }
+}
+
+class Human(name: String, origin: String, weight: Double,
+            override var maxSpeed: Double): Mammal(name, origin, weight) {
+
+    override fun run() {
+        // Code to run
+        println("Runs on two legs")
+    }
+
+    override fun breath() {
+        // Code to breath
+        println("Breaths through mouth and nose")
+    }
+}
+
+class Elephant(name: String, origin: String, weight: Double,
+               override var maxSpeed: Double): Mammal(name, origin, weight) {
+
+   override fun run() {
+       // Code to run
+       println("Runs on four legs")
+   }
+
+    override fun breath() {
+        // Code to breath
+        println("Breaths through the trunk")
     }
 }
