@@ -16,7 +16,7 @@ fun main() {
 //    var samsungG8 = MobilePhone("Android", "Samsung", "Galaxy 8")
     eightT.chargeBattery(30)
 
-    var myCar = Car()
+    var myCar = Cars()
     println("Brand is ${myCar.myBrand}")
     myCar.maxSpeed = 200
     println("maxSpeed is ${myCar.maxSpeed}")
@@ -40,6 +40,17 @@ fun main() {
 
     val (id,name) = updatedUser
     println("$id $name")
+
+    var audiA3 = Car("A3", "Audi")
+    var teslaS = ElectricCar("S", "Tesla", 85.0)
+    teslaS.chargerType = "Type2"
+    teslaS.extendRange(200.0)
+
+    teslaS.drive()
+
+    // Polymorphism
+    audiA3.drive(200.0)
+    teslaS.drive(200.0)
 }
 
 class Person(firstName: String = "John", lastName: String = "Doe") {
@@ -80,7 +91,7 @@ class MobilePhone(osName: String, brand: String, model: String){
     }
 }
 
-class Car(){
+class Cars(){
     lateinit var owner : String
 
     val myBrand: String = "BMW"
@@ -105,3 +116,35 @@ class Car(){
 }
 
 data class User(val id: Long, var name: String)
+
+// class must be open to be inheritable
+
+// Parent Class of ElectricCar
+open class Car(val name: String, val brand:String){
+    open var range: Double = 0.0
+
+    fun extendRange(amount: Double){
+        if(amount > 0)
+            range+= amount
+    }
+
+    open fun drive(distance: Double){
+        println("Drove for $distance KM.")
+    }
+}
+
+// Child Class of Car
+class ElectricCar(name: String, brand: String, batteryLife: Double)
+    : Car(name, brand){
+
+    var chargerType = "Type1"
+    override var range = batteryLife * 6
+
+    override fun drive(distance: Double){
+        println("Drove for $distance KM on electricity.")
+    }
+
+    fun drive(){
+        println("Can drive for $range KM on electricity.")
+    }
+}
