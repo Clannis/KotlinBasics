@@ -1,6 +1,7 @@
 package com.jamesrdodds.kotlinbasics
 
 import java.lang.IllegalArgumentException
+import java.util.*
 
 fun main() {
     var james = Person("James", "Dodds", 30)
@@ -20,6 +21,24 @@ fun main() {
     println("maxSpeed is ${myCar.maxSpeed}")
     println("Model is ${myCar.myModel}")
 
+    val user1 = User(1, "James")
+    println(user1.name)
+    user1.name = "Michael"
+    println(user1.name)
+
+    val user2 = User(1, "Michael")
+    println(user1 == user2)
+
+    println("User details: $user1")
+
+    val updatedUser = user1.copy(name="James")
+    println(updatedUser)
+
+    println(updatedUser.component1())
+    println(updatedUser.component2())
+
+    val (id,name) = updatedUser
+    println("$id $name")
 }
 
 class Person(firstName: String = "John", lastName: String = "Doe") {
@@ -60,7 +79,7 @@ class Car(){
     val myBrand: String = "BMW"
         // custom getter
         get() {
-            return field.toLowerCase()
+            return field.lowercase()
         }
 
     var maxSpeed : Int = 250
@@ -77,3 +96,5 @@ class Car(){
         this.owner = "Frank"
     }
 }
+
+data class User(val id: Long, var name: String)
