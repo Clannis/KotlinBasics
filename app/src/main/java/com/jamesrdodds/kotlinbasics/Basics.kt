@@ -1,5 +1,7 @@
 package com.jamesrdodds.kotlinbasics
 
+import java.lang.IllegalArgumentException
+
 fun main() {
     var james = Person("James", "Dodds", 30)
     james.hobby = "skateboard"
@@ -12,6 +14,12 @@ fun main() {
 //    var nineProT = MobilePhone("Android", "OnePlus", "9 Pro")
 //    var samsungG8 = MobilePhone("Android", "Samsung", "Galaxy 8")
 
+    var myCar = Car()
+    println("Brand is ${myCar.myBrand}")
+    myCar.maxSpeed = 200
+    println("maxSpeed is ${myCar.maxSpeed}")
+    println("Model is ${myCar.myModel}")
+
 }
 
 class Person(firstName: String = "John", lastName: String = "Doe") {
@@ -23,14 +31,14 @@ class Person(firstName: String = "John", lastName: String = "Doe") {
 
     // Initializer - Code will run on initialization of instance
     init{
+        this.firstName = firstName
+        this.lastName = lastName
         println("Initialized a new person. They are $firstName $lastName.")
     }
     // Secondary Constructor
     constructor(firstName: String = "John", lastName: String = "Doe", age: Int)
             : this(firstName, lastName){
         this.age = age
-        this.firstName = firstName
-        this.lastName = lastName
     }
 
     // Member Functions - Methods
@@ -43,5 +51,29 @@ class MobilePhone(osName: String, brand: String, model: String){
 
     init{
         println("This is a $brand $model running $osName.")
+    }
+}
+
+class Car(){
+    lateinit var owner : String
+
+    val myBrand: String = "BMW"
+        // custom getter
+        get() {
+            return field.toLowerCase()
+        }
+
+    var maxSpeed : Int = 250
+        // get() = field
+        set(value){
+            field = if(value > 0) value else throw IllegalArgumentException("Max Speed must be greater than 0.")
+        }
+
+    var myModel: String = "M5"
+        private set
+
+    init{
+        myModel = "M3"
+        this.owner = "Frank"
     }
 }
