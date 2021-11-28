@@ -41,16 +41,17 @@ fun main() {
     val (id,name) = updatedUser
     println("$id $name")
 
-    var audiA3 = Car("A3", "Audi")
-    var teslaS = ElectricCar("S", "Tesla", 85.0)
+    var audiA3 = Car(200.0,"A3", "Audi")
+    var teslaS = ElectricCar(240.0,"S", "Tesla", 85.0)
     teslaS.chargerType = "Type2"
     teslaS.extendRange(200.0)
 
-    teslaS.drive()
-
+//    teslaS.drive()
+    teslaS.brake()
+    audiA3.brake()
     // Polymorphism
-    audiA3.drive(200.0)
-    teslaS.drive(200.0)
+//    audiA3.drive(200.0)
+//    teslaS.drive(200.0)
 }
 
 class Person(firstName: String = "John", lastName: String = "Doe") {
@@ -117,15 +118,26 @@ class Cars(){
 
 data class User(val id: Long, var name: String)
 
-// class must be open to be inheritable
+interface Drivable{
+    val maxSpeed: Double
+    fun drive(): String
+    fun brake(){
+        println("The drivable is braking.")
+    }
+}
 
+// class must be open to be inheritable
 // Parent Class of ElectricCar
-open class Car(val name: String, val brand:String){
+open class Car(override val maxSpeed: Double, val name: String, val brand:String): Drivable{
     open var range: Double = 0.0
 
     fun extendRange(amount: Double){
         if(amount > 0)
             range+= amount
+    }
+
+    override fun drive(): String{
+        return "driving the interface drive"
     }
 
     open fun drive(distance: Double){
@@ -134,8 +146,8 @@ open class Car(val name: String, val brand:String){
 }
 
 // Child Class of Car
-class ElectricCar(name: String, brand: String, batteryLife: Double)
-    : Car(name, brand){
+class ElectricCar(maxSpeed: Double, name: String, brand: String, batteryLife: Double)
+    : Car(maxSpeed, name, brand){
 
     var chargerType = "Type1"
     override var range = batteryLife * 6
@@ -144,7 +156,12 @@ class ElectricCar(name: String, brand: String, batteryLife: Double)
         println("Drove for $distance KM on electricity.")
     }
 
-    fun drive(){
-        println("Can drive for $range KM on electricity.")
+    override fun drive(): String{
+        return "Can drive for $range KM on electricity."
+    }
+
+    override fun brake() {
+        super.brake()
+        println("Brake inside of the electric car.")
     }
 }
