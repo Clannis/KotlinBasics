@@ -30,4 +30,19 @@ fun main() {
     }
     println(".....arrayList3.get(1).....")
     println(arrayList3.get(1))
+
+    val arrayList4 = ArrayList<Double>()
+    for(i in 1..5){
+        arrayList4.add(i.toDouble())
+    }
+    println(arrayList4)
+    println(average(arrayList4))
+}
+
+fun average(array: ArrayList<Double>): Double {
+    var sum = 0.0
+    for(i in array){
+        sum += i
+    }
+    return sum/array.size
 }
