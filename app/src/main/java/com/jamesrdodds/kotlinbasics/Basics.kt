@@ -11,9 +11,10 @@ fun main() {
 //    var peterson = Person(lastName = "Peterson")
 
 
-//    var eightT = MobilePhone("Android", "OnePlus", "8T")
+    var eightT = MobilePhone("Android", "OnePlus", "8T")
 //    var nineProT = MobilePhone("Android", "OnePlus", "9 Pro")
 //    var samsungG8 = MobilePhone("Android", "Samsung", "Galaxy 8")
+    eightT.chargeBattery(30)
 
     var myCar = Car()
     println("Brand is ${myCar.myBrand}")
@@ -67,9 +68,15 @@ class Person(firstName: String = "John", lastName: String = "Doe") {
 }
 
 class MobilePhone(osName: String, brand: String, model: String){
+    private var battery = 50
 
     init{
         println("This is a $brand $model running $osName.")
+    }
+
+    fun chargeBattery(chargeAmount: Int){
+        println("The phone had $battery% charge. It was charged by $chargeAmount% and now has ${battery + chargeAmount}%.")
+        battery += chargeAmount
     }
 }
 
